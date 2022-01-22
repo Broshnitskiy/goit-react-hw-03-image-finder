@@ -17,6 +17,7 @@ class App extends Component {
     page: null,
     error: null,
     isLoading: false,
+    showButton: false,
   };
 
   handleFormSubmit = (imageName) => {
@@ -38,6 +39,7 @@ class App extends Component {
 
     if (prevName !== newName || prevState.page !== this.state.page) {
       this.setState({ isLoading: true });
+      this.setState({ showButton: true });
       try {
         const data = await getImages(newName.trim(), page);
 
@@ -51,6 +53,7 @@ class App extends Component {
           toast.warn(
             "We're sorry, but you've reached the end of search results."
           );
+          this.setState({ showButton: false });
         }
         page === 1
           ? this.setState({ gallery: data.hits })
@@ -66,7 +69,7 @@ class App extends Component {
   }
 
   render() {
-    const { gallery, imageName, error, isLoading } = this.state;
+    const { gallery, imageName, error, isLoading, showButton } = this.state;
     return (
       <div className="App">
         {error && <p>Whoops, something went wrong: {error.message}</p>}
@@ -84,7 +87,7 @@ class App extends Component {
           </ImageGallery>
         )}
 
-        {gallery.length > 0 && <Button onClick={this.handleClick} />}
+        {showButton && <Button onClick={this.handleClick} />}
         <Modal />
         <ToastContainer autoClose={3000} />
       </div>
