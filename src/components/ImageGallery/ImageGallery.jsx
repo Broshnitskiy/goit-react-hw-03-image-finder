@@ -1,3 +1,5 @@
+import styles from "./ImageGallery.module.css";
+
 export const ImageGallery = ({ children }) => {
-  return <ul className="gallery">{children}</ul>;
+  return <ul className={styles.ImageGallery}>{children}</ul>;
 };

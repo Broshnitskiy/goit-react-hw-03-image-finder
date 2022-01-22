@@ -1,4 +1,6 @@
 import { Component } from "react";
+import { toast } from "react-toastify";
+import styles from "./Searchbar.module.css";
 
 export class Searchbar extends Component {
   state = {
@@ -13,6 +15,8 @@ export class Searchbar extends Component {
     e.preventDefault();
 
     if (this.state.inputValue.trim() === "") {
+      toast.info("Enter the name of the picture !");
+      return;
     }
 
     this.props.onSubmit(this.state.inputValue);
@@ -22,14 +26,14 @@ export class Searchbar extends Component {
   render() {
     const { inputValue } = this.state;
     return (
-      <header className="searchbar">
-        <form className="form" onSubmit={this.handleSubmit}>
-          <button type="submit" className="button">
-            <span className="button-label">Search</span>
+      <header className={styles.Searchbar}>
+        <form className={styles.SearchForm} onSubmit={this.handleSubmit}>
+          <button type="submit" className={styles.SearchFormButton}>
+            <span className={styles.SearchFormButtonLabel}>Search</span>
           </button>
 
           <input
-            className="input"
+            className={styles.SearchFormInput}
             type="text"
             autoсomplete="off"
             autoFocus
