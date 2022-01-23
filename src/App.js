@@ -6,9 +6,10 @@ import { Modal } from "./components/Modal/Modal";
 import { Button } from "./components/Button/Button";
 import { ImageGalleryItem } from "./components/ImageGalleryItem/ImageGalleryItem";
 import { getImages } from "./fetch-api/fetchBackend";
-import { Oval } from "react-loader-spinner";
+import { Loader } from "./components/Loader/Loader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Scroll from "react-scroll";
 
 class App extends Component {
   state = {
@@ -31,6 +32,12 @@ class App extends Component {
       return {
         page: prevState.page + 1,
       };
+    });
+    let scroll = Scroll.animateScroll;
+    scroll.scrollMore(400, {
+      duration: 1000,
+
+      smooth: "easeInOutQuint",
     });
   };
 
@@ -87,21 +94,11 @@ class App extends Component {
       showModal,
       bigImgUrl,
     } = this.state;
+
     return (
       <div className={"App"}>
         {error && <p>Whoops, something went wrong: {error.message}</p>}
-        {isLoading && (
-          <div className={"Spinner"}>
-            <Oval
-              arialLabel="loading-indicator"
-              height={100}
-              width={100}
-              strokeWidth={5}
-              color="red"
-              secondaryColor="yellow"
-            />
-          </div>
-        )}
+        {isLoading && <Loader />}
         <Searchbar onSubmit={this.handleFormSubmit} />
         {gallery.length > 0 && (
           <ImageGallery>
