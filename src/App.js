@@ -63,6 +63,7 @@ class App extends Component {
           toast.error(
             "Sorry, there are no images matching your search query. Please try again."
           );
+          this.setState({ showButton: false });
           return;
         }
         if (page * 12 >= data.totalHits) {
