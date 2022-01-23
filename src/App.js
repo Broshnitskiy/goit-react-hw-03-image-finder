@@ -98,7 +98,7 @@ class App extends Component {
           </ImageGallery>
         )}
 
-        {showButton && <Button onClick={this.handleClick} />}
+        {showButton && !isLoading && <Button onClick={this.handleClick} />}
         <Modal />
         <ToastContainer autoClose={3000} />
       </div>
