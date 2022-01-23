@@ -1,4 +1,4 @@
-// import "./App.css";
+import "./App.css";
 import React, { Component } from "react";
 import { Searchbar } from "./components/Searchbar/Searchbar";
 import { ImageGallery } from "./components/ImageGallery/ImageGallery";
@@ -73,7 +73,18 @@ class App extends Component {
     return (
       <div className="App">
         {error && <p>Whoops, something went wrong: {error.message}</p>}
-        {isLoading && <Oval color="orange" height={80} width={80} />}
+        {isLoading && (
+          <div className={"Spinner"}>
+            <Oval
+              arialLabel="loading-indicator"
+              height={100}
+              width={100}
+              strokeWidth={5}
+              color="red"
+              secondaryColor="yellow"
+            />
+          </div>
+        )}
         <Searchbar onSubmit={this.handleFormSubmit} />
         {gallery.length > 0 && (
           <ImageGallery>
