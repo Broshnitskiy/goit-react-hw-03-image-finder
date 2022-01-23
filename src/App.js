@@ -4,7 +4,7 @@ import { Searchbar } from "./components/Searchbar/Searchbar";
 import { ImageGallery } from "./components/ImageGallery/ImageGallery";
 import { Modal } from "./components/Modal/Modal";
 import { Button } from "./components/Button/Button";
-import { ImageGalleryItem } from "./components/ImageGalleryItem/ImageGalleryItem";
+
 import { getImages } from "./fetch-api/fetchBackend";
 import { Loader } from "./components/Loader/Loader";
 import { ToastContainer, toast } from "react-toastify";
@@ -101,17 +101,11 @@ class App extends Component {
         {isLoading && <Loader />}
         <Searchbar onSubmit={this.handleFormSubmit} />
         {gallery.length > 0 && (
-          <ImageGallery>
-            {gallery.map(({ id, webformatURL, largeImageURL }) => (
-              <ImageGalleryItem
-                key={id}
-                onOpen={this.toggleModal}
-                imageUrl={webformatURL}
-                imageName={imageName}
-                largeImageURL={largeImageURL}
-              />
-            ))}
-          </ImageGallery>
+          <ImageGallery
+            imageName={imageName}
+            gallery={gallery}
+            toggleModal={this.toggleModal}
+          />
         )}
 
         {showButton && !isLoading && <Button onClick={this.handleClick} />}

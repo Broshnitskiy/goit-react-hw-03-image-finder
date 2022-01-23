@@ -24,8 +24,8 @@ export const ImageGalleryItem = ({
 };
 
 ImageGalleryItem.propTypes = {
-  imageUrl: PropTypes.string,
-  imageName: PropTypes.string,
-  largeImageURL: PropTypes.string,
-  onOpen: PropTypes.func,
+  imageUrl: PropTypes.string.isRequired,
+  imageName: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
