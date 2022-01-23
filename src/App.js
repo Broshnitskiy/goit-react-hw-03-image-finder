@@ -18,6 +18,8 @@ class App extends Component {
     error: null,
     isLoading: false,
     showButton: false,
+    showModal: false,
+    bigImgUrl: "",
   };
 
   handleFormSubmit = (imageName) => {
@@ -30,6 +32,13 @@ class App extends Component {
         page: prevState.page + 1,
       };
     });
+  };
+
+  toggleModal = (imgUrl) => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+      bigImgUrl: imgUrl,
+    }));
   };
 
   async componentDidUpdate(prevProps, prevState) {
@@ -69,9 +78,17 @@ class App extends Component {
   }
 
   render() {
-    const { gallery, imageName, error, isLoading, showButton } = this.state;
+    const {
+      gallery,
+      imageName,
+      error,
+      isLoading,
+      showButton,
+      showModal,
+      bigImgUrl,
+    } = this.state;
     return (
-      <div className="App">
+      <div className={"App"}>
         {error && <p>Whoops, something went wrong: {error.message}</p>}
         {isLoading && (
           <div className={"Spinner"}>
@@ -88,18 +105,35 @@ class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
         {gallery.length > 0 && (
           <ImageGallery>
-            {gallery.map(({ id, webformatURL }) => (
+            {gallery.map(({ id, webformatURL, largeImageURL }) => (
               <ImageGalleryItem
                 key={id}
+                onOpen={this.toggleModal}
                 imageUrl={webformatURL}
                 imageName={imageName}
+                largeImageURL={largeImageURL}
               />
             ))}
           </ImageGallery>
         )}
 
         {showButton && !isLoading && <Button onClick={this.handleClick} />}
-        <Modal />
+        {showModal && (
+          <Modal
+            onClose={this.toggleModal}
+            imgUrl={bigImgUrl}
+            imageName={imageName}
+          >
+            <button
+              type="button"
+              onClick={() => this.toggleModal()}
+              className={"ModalButton"}
+            >
+              X
+            </button>
+          </Modal>
+        )}
+
         <ToastContainer autoClose={3000} />
       </div>
     );
